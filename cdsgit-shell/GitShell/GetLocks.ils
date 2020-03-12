@@ -1,0 +1,13 @@
+defmethod( GetLocks (( gs GitShell ))
+
+    syscmd = strcat("cd " gs->root->str " && git lfs locks")
+    result=Cmd(gs syscmd)
+
+    	if(!result then
+       	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
+    	else
+    		Info(gs result)
+    	)
+
+	t
+)

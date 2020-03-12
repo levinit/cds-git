@@ -1,0 +1,21 @@
+/*
+Install and configure Git-LFS 
+*/
+
+
+defmethod( InitLFS (( gs GitShell ))
+
+   if( !gs->path || !isDir(gs->path) then
+      ErrorCG(gs sprintf(nil "GitShell InitLFS: %L is not a directory" gs->path) )
+   )
+
+   syscmd = strcat(getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_init.sh " gs->path)
+
+   result=Cmd(gs syscmd)
+   	if(!result then
+   	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
+	else
+		Info(gs result)
+	)
+
+)

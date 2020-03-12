@@ -19,6 +19,6 @@ defmethod( Discard (( gs GitShell ))
          Refresh(gs)
       )
    )
-
+   Unlock(gs gs->path)   
    t
 )

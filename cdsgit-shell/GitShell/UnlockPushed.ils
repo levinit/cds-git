@@ -1,0 +1,20 @@
+defmethod( UnlockPushed (( gs GitShell ))
+	
+    syscmd = strcat("cd " gs->root->str " && git diff origin/master@{1} origin/master --name-status")
+    result=Cmd(gs syscmd)
+
+      	if(!result then
+         	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
+      	else
+      		; unlock those files that have been successfully pushed
+      		files = parseString(result, "\t\n")
+      		foreach( f files
+            	fullPath = strcat(gs->root->str "/" f)
+            	when( isFile(fullPath) && rexMatchp(".oa" fullPath) 
+                	Unlock( gs fullPath )
+                	;printf("%s is an OA file\n" path)
+            	)
+        	)
+      	)
+	t
+)
