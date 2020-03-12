@@ -53,7 +53,12 @@ loadi(strcat(cdsgit_gs_path "/GitShell/Init.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Push.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Pull.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Fetch.ils"))
-
+;RB, add LFS Lock
+loadi(strcat(cdsgit_gs_path "/GitShell/Lock.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/Unlock.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/UnlockPushed.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/GetLocks.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/InitLFS.ils"))
 
 ;GitOperations
 loadi(strcat(cdsgit_gs_path "/GitShell/Reset.ils"))
