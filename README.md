@@ -2,6 +2,9 @@
 # Welcome to CdsGit!
 Cadence Virtuose Git Integration written in SKILL++
 
+*** This fork adds support for file locking using git-lfs ***
+*** Still under development. Tested with repos hosted on an on-prem GitLab server ***
+
 ## What is CdsGit?
 CdsGit is a SKILL++ library written that allows a user to use
 Git to manage their cadence libraries. Unlike other Git clients,
