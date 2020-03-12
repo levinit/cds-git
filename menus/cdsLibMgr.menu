@@ -32,6 +32,8 @@ lmgrCreateMenuItem("CGMseparator4"   "separator" '( ("callback" ("")) ) )
 lmgrCreateMenuItem("CGMgui"       "simple"  '( ("label" "Git GUI")          ("callback" ("CGMlmgrCB")) ) )
 
 lmgrCreateMenuItem("CGMinit"      "simple"  '( ("label" "Init")               ("callback" ("CGMlmgrCB")) ) )
+;RB - create Init LFS menu item
+lmgrCreateMenuItem("CGMinitLFS"   "simple"  '( ("label" "Init LFS")           ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMstatusAll" "simple"  '( ("label" "List Repositories")  ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMclone"     "simple"  '( ("label" "Clone")              ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMsetupSSH"  "simple"  '( ("label" "Setup/Show SSH")     ("callback" ("CGMlmgrCB")) ) )
@@ -64,8 +66,10 @@ lmgrCreateMenuItem("CGMdiff"      "simple"  '( ("label" "Diff")             ("ca
 lmgrCreateMenuItem("CGMadd"       "simple"  '( ("label" "Add")               ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMreset"     "simple"  '( ("label" "Reset")             ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMcommit"    "simple"  '( ("label" "Commit")            ("callback" ("CGMlmgrCB")) ) )
-lmgrCreateMenuItem("CGMdiscard"   "simple"  '( ("label" "Discard Unstaged")  ("callback" ("CGMlmgrCB")) ) )
-
+lmgrCreateMenuItem("CGMdiscard"   "simple"  '( ("label" "Discard Unstaged & Unlock")  ("callback" ("CGMlmgrCB")) ) )
+;;RB, add Lock menu items
+lmgrCreateMenuItem("CGMlock"     "simple"   '( ("label" "Lock")              ("callback" ("CGMlmgrCB")) ) )
+lmgrCreateMenuItem("CGMshowLocks"     "simple"   '( ("label" "Show Locks")         ("callback" ("CGMlmgrCB")) ) )
 
 lmgrCreateMenu("gitMenuPreferences" '(("label" "Preferences")) )
    lmgrCreateMenuItem("CGMprRepo"      "simple"  '( ("label" "git config-Repository")       ("callback" ("CGMlmgrCB")) ) )
@@ -86,6 +90,8 @@ lmgrAddMenuItems("gitMenu" "LCVlct" list("CGMgui"          ) )
 lmgrAddMenuItems("gitMenu" ""       list("CGMseparator2"   ) )
 
 lmgrAddMenuItems("gitMenu" ""       list("CGMinit"         ) )
+;RB - add Init LFS menu item
+lmgrAddMenuItems("gitMenu" ""       list("CGMinitLFS"         ) )
 lmgrAddMenuItems("gitMenu" ""       list("CGMstatusAll"    ) )
 lmgrAddMenuItems("gitMenu" ""       list("CGMclone"        ) )
 lmgrAddMenuItems("gitMenu" ""       list("CGMsetupSSH"     ) )
@@ -120,7 +126,9 @@ lmgrAddMenuItems("gitMenu" "LCV"    list("CGMstatus"       ) )
 lmgrAddMenuItems("gitMenu" "LCV"    list("CGMdiff"         ) )
 lmgrAddMenuItems("gitMenu" "LCV"    list("CGMcheckout"     ) )
 lmgrAddMenuItems("gitMenu" "LCV"    list("CGMexport"       ) )
-
+;;RB, add Lock menu items
+lmgrAddMenuItems("gitMenu" "LCV"    list("CGMlock"         ) )
+lmgrAddMenuItems("gitMenu" "LCV"    list("CGMshowLocks"         ) )
 
 lmgrAddMenuItems("gitMenu" ""       list("gitMenuPreferences"     ) )
    lmgrAddMenuItems("gitMenuPreferences" ""       list("CGMprRepo"       ) )

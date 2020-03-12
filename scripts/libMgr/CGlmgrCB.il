@@ -26,6 +26,9 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       "CGMcommit"
       "CGMdiscard"
       "CGMdiff"
+      ;RB, add lock items
+      "CGMlock"
+      "CGMshowLocks"
       ;Merge
       "CGMmrMerge"
       "CGMmrMergeAbort"
@@ -64,6 +67,7 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       ;Repo
       ("CGMgui"           Gui(gs)            )
       ("CGMinit"          CGPBinitForm()     )
+      ("CGMinitLFS"       InitLFS(gs)        )
       ("CGMstatusAll"     CGstatusAllForm()  )
       ("CGMclone"         CGcloneForm()      )
       ("CGMsetupSSH"      CGsetupSSHform()   )
@@ -72,9 +76,12 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       ("CGMcommit"        CGstatusForm(gs)   ); Currently Commit and status do the same thing
       ("CGMexport"        CGexportForm(gs)   )
       ("CGMcheckout"      CGcheckoutForm(gs) )
-      ("CGMadd"           AddCG(gs gs->path)   )
+      ("CGMadd"           AddCG(gs gs->path) )
       ("CGMreset"         Reset(gs gs->path) )
       ("CGMdiscard"       Discard(gs)        )
+      ;RB, add lock
+      ("CGMlock"          Lock(gs gs->path)  )
+      ("CGMshowLocks"     GetLocks(gs)       ) ;CGshowLocksAllForm(gs))
       ;Merge
       ("CGMmrMerge"       CGBSmergeForm(gs)  )
       ("CGMmrMergeAbort"  CGmergeAbortCB(gs) )
