@@ -9,7 +9,7 @@ else
 	LCVdir=${path}
 fi
 #rootdir=$(realpath $2)
-output=()
+#output=()
 cd ${LCVdir}
 files=$(find . -name '*.oa')
 
@@ -20,6 +20,8 @@ for f in $files
 			#output+=( $(git lfs lock $f) )
 			git lfs unlock $f
 			#output+=( , )
+		else
+			echo "Couldn't unlock ${f}. Either it's unlocked already or locked by someone else."
 		fi
 	done
 #echo -n ${output[@]}
