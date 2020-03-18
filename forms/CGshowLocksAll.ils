@@ -1,29 +1,29 @@
-procedure( CGstatusAllForm()
+procedure( CGshowLocksAllForm(gs)
 
    importSkillVar(cdsGitAppName)
 
-   formHeader = sprintf(nil "%s Workarea Repositories" cdsGitAppName)
+   formHeader = sprintf(nil "%s Locked Cellviews" cdsGitAppName)
 
    grid = Gridder()
 
    totalW = 6
    gridW = grid->width
 
-   selectCB = "CGstatusAllCB()"
-   refreshCB = "CGstatusAllRefreshCB()"
+   selectCB = "CGshowLocksAllCB()"
+   refreshCB = "CGshowLocksAllRefreshCB()"
 
-   ;TODO - Add branch to status
+  
    reportHeader = list(
       list( "Path"   5*gridW 'left 'string t )
-      list( "Status" 1*gridW 'left 'string t )
+      list( "Owner" 1*gridW 'left 'string t )
       )
 
-   l_repos = hiCreateLabel( ?name 'l_repos ?labelText "Git Repositories")
+   l_locks = hiCreateLabel( ?name 'l_repos ?labelText "LFS locks")
 
-   rf_repos = hiCreateReportField(
-            ?name 'rf_repos
+   rf_locks = hiCreateReportField(
+            ?name 'rf_locks
             ?headers reportHeader
-            ?choices CGstatusAllGetStatus()
+            ?choices CGshowLocksAllGetStatus()
             ?selectMode 'single
             ?doubleClickCB selectCB
          )
@@ -33,22 +33,22 @@ procedure( CGstatusAllForm()
       ?buttonText "Refresh"
       ?callback refreshCB
    )
-
+/*
    b_select_repo = hiCreateButton(
       ?name 'b_select_repo
       ?buttonText "Status"
       ?callback selectCB
    )
+*/
 
-
-   NewField(grid ?field l_repos       ?x 1 ?y 1  ?w totalW ?h 1 ?prompt 10)
-   NewField(grid ?field rf_repos      ?x 1 ?y 2  ?w totalW ?h 4 ?prompt 10)
+   NewField(grid ?field l_locks       ?x 1 ?y 1  ?w totalW ?h 1 ?prompt 10)
+   NewField(grid ?field rf_locks      ?x 1 ?y 2  ?w totalW ?h 4 ?prompt 10)
    NewField(grid ?field b_refresh     ?x 1 ?y 6  ?w totalW ?h 1 ?prompt 10)
    NewField(grid ?field b_select_repo ?x 1 ?y 7  ?w totalW ?h 1 ?prompt 10)
 
 
-   cgstatusall_form = hiCreateAppForm(
-               ?name 'cgstatusall_form
+   cglocksall_form = hiCreateAppForm(
+               ?name 'cglocksall_form
                ?formTitle formHeader
                ?callback ""
                ?fields         grid->fields
@@ -65,7 +65,7 @@ procedure( CGstatusAllForm()
 )
 
 
-procedure( CGstatusAllCB()
+procedure( CGshowLocksAllCB()
       fvalues  = cgstatusall_form->rf_repos->value
       fchoices = cgstatusall_form->rf_repos->choices
 
@@ -79,10 +79,10 @@ procedure( CGstatusAllCB()
 
 )
 
-procedure( CGstatusAllGetStatus()
+procedure( CGshowLocksAllGetStatus()
    gitList = CGgitLibs()
 
-   rootList = list()
+   lockList = list()
    foreach( rootPath gitList
       if( !setof( strlist rootList car(strlist)==rootPath->str) then
 
@@ -100,7 +100,7 @@ procedure( CGstatusAllGetStatus()
    rootList
 )
 
-procedure( CGstatusAllRefreshCB()
+procedure( CGshowLocksAllRefreshCB()
 
-   cgstatusall_form->rf_repos->choices=CGstatusAllGetStatus()
+   cgstatusall_form->rf_repos->choices=CGshowLocksAllGetStatus()
 )
