@@ -6,7 +6,11 @@ defmethod( GetLocks (( gs GitShell ))
     	if(!result then
        	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
     	else
-    		Info(gs result)
+    		if( result != "" then
+    			Info(gs result)
+    		else
+    			Info(gs strcat("Nothing locked in " gs->root->str))
+    		)
     	)
 
 	t
