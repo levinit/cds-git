@@ -15,14 +15,16 @@ files=$(find . -name '*.oa')
 
 for f in $files
 	do
+		#check we have it locked AND file is not locally modified
 		if [ -n "$(git lfs locks --local --path=${f})" ]
 		then
-			#output+=( $(git lfs lock $f) )
-			git lfs unlock $f
-			#output+=( , )
-		else
-			echo "Couldn't unlock ${f}. Either it's unlocked already or locked by someone else."
+			if [ -z "$(git fetch; git diff --stat origin/master | grep ${f})" ]
+			then
+				git lfs unlock ${f}
+			else
+				echo "Can't unlock ${f} : file is locally modified"
+			fi
 		fi
 	done
-#echo -n ${output[@]}
+
 

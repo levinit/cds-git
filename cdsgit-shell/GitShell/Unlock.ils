@@ -5,9 +5,13 @@ defmethod( Unlock (( gs GitShell ) oppath)
 
       	if(!result then
          	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
-      	else
-      		Info(gs result)
-      	)
+      	else 
+          if( result != "" then
+            Info(gs result)
+          else
+            Info(gs "Nothing to unlock")
+          )
+        )
     )
 	t
 )
