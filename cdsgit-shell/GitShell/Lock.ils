@@ -11,3 +11,4 @@ defmethod( Lock (( gs GitShell ) oppath)
     )
 	t
 )
+
