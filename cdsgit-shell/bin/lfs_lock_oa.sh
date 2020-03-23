@@ -5,7 +5,7 @@ LCVdir=$(realpath $1)
 #rootdir=$(realpath $2)
 output=()
 cd ${LCVdir}
-files=$(find . -name '*.oa')
+files=$(find . -type f \( -name '*.oa' -o -name '*.sdb' \))
 
 for f in $files
 	do

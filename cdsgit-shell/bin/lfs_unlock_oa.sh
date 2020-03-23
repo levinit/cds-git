@@ -8,10 +8,10 @@ then
 else
 	LCVdir=${path}
 fi
-#rootdir=$(realpath $2)
-#output=()
+
 cd ${LCVdir}
-files=$(find . -name '*.oa')
+#add .sdb files for maestro views
+files=$(find . -type f \( -name '*.oa' -o -name '*.sdb' \))
 
 for f in $files
 	do
