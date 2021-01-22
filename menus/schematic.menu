@@ -20,7 +20,6 @@ procedure( createCdsGitSchMenu()
          hiCreateMenuItem(?name 'item8 ?itemText "Checkout"         ?callback "CGMlmgrCBcv( \"CGMcheckout\" )" )
          hiCreateMenuItem(?name 'item9 ?itemText "Export"           ?callback "CGMlmgrCBcv( \"CGMexport\"   )" )
          hiCreateMenuItem(?name 'item10 ?itemText "Lock"            ?callback "CGMlmgrCBcv( \"CGMlock\"	    )" )                  )
-      )
    )
 );
 
