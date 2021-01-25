@@ -14,7 +14,10 @@ then
 	#solve x509: certificate signed by unknown authority error:
 	git config http.sslverify false
 	#check locks before push:
-	git config lfs.https://dev-gitlab.cryptoquantique.com/rbennell/GIT_TEST.git/info/lfs.locksverify true
+	#need to remove port and use https not ssh for LFS
+	remote=$(git config --get remote.origin.url)
+	remote_np=$(sed -r 's/.com:[0-9]*/.com/g' <<<"$remote")
+	git config lfs.${remote_np/ssh:\/\/git@/https:\/\/}/info/lfs.locksverify true
 	#ensure locked files are read-only
 	git config lfs.setlockablereadonly true
 else
