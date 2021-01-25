@@ -11,7 +11,7 @@ defmethod( UnlockPushed (( gs GitShell ))
       		foreach( f files
             	fullPath = strcat(gs->root->str "/" f)
             	when( isFile(fullPath) && rexMatchp(".oa" fullPath) 
-                	Unlock( gs fullPath )
+                	LFSunlock( gs fullPath )
                 	;printf("%s is an OA file\n" path)
             	)
         	)

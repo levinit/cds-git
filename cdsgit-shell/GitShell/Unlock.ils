@@ -1,4 +1,4 @@
-defmethod( Unlock (( gs GitShell ) oppath)
+defmethod( LFSunlock (( gs GitShell ) oppath)
 	if( oppath && oppath != "" then
       syscmd = strcat(getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh " oppath)
       result=Cmd(gs syscmd)
