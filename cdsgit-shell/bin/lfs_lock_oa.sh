@@ -1,5 +1,5 @@
 #!/bin/bash
-#git lsf unlock all users' locked *.oa files underneath given directory
+#git lsf lock *.oa and *.sdb files underneath given directory
 
 LCVdir=$(realpath $1)
 #rootdir=$(realpath $2)
