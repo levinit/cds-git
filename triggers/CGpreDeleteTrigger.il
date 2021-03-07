@@ -9,10 +9,11 @@ procedure( CGpreDeleteTrigger(dd)
          ('ddCellType t)
          ('ddViewType t)
          (t nil))
-      if( validType then
+      when( validType
          gs = GitShell( ?path ddPath ?dd dd ?name ddName ?skipRoot nil ?silent t)
          gs->libName = dd~>lib~>name
-         if( gs->valid then
+         when( gs->valid
+            printf("CdsGit CGpreDeleteTrigger(): Unlocking view for edit\n")
             LFSunlock(gs gs->path)
          )
       )
