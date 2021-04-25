@@ -15,3 +15,21 @@ defmethod( GetLocks (( gs GitShell ))
 
 	t
 )
+
+defmethod( GetLocalLocks (( gs GitShell ))
+
+    syscmd = strcat("cd " gs->root->str " && git lfs locks --local")
+    result=Cmd(gs syscmd)
+
+        if(!result then
+        ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
+        else
+            if( result != "" then
+                Info(gs result)
+            else
+                Info(gs strcat("Nothing locked in " gs->root->str))
+            )
+        )
+
+    t
+)

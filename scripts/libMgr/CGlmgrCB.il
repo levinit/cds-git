@@ -29,6 +29,7 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       ;RB, add lock items
       "CGMlock"
       "CGMshowLocks"
+      "CGMshowMyLocks"
       ;Merge
       "CGMmrMerge"
       "CGMmrMergeAbort"
@@ -81,7 +82,8 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       ("CGMdiscard"       Discard(gs)        )
       ;RB, add lock
       ("CGMlock"          LFSlock(gs gs->path)  )
-      ("CGMshowLocks"     GetLocks(gs)       ) ;CGshowLocksAllForm(gs))
+      ("CGMshowLocks"     GetLocks(gs)       ) 
+      ("CGMshowMyLocks"   GetLocalLocks(gs)  )
       ;Merge
       ("CGMmrMerge"       CGBSmergeForm(gs)  )
       ("CGMmrMergeAbort"  CGmergeAbortCB(gs) )

@@ -68,8 +68,9 @@ lmgrCreateMenuItem("CGMreset"     "simple"  '( ("label" "Reset")             ("c
 lmgrCreateMenuItem("CGMcommit"    "simple"  '( ("label" "Commit")            ("callback" ("CGMlmgrCB")) ) )
 lmgrCreateMenuItem("CGMdiscard"   "simple"  '( ("label" "Discard Unstaged & Unlock")  ("callback" ("CGMlmgrCB")) ) )
 ;;RB, add Lock menu items
-lmgrCreateMenuItem("CGMlock"     "simple"   '( ("label" "Lock")              ("callback" ("CGMlmgrCB")) ) )
-lmgrCreateMenuItem("CGMshowLocks"     "simple"   '( ("label" "Show Locks")         ("callback" ("CGMlmgrCB")) ) )
+lmgrCreateMenuItem("CGMlock"     "simple"   '( ("label" "Lock For Edit")              ("callback" ("CGMlmgrCB")) ) )
+lmgrCreateMenuItem("CGMshowLocks"     "simple"   '( ("label" "Show All Locks")         ("callback" ("CGMlmgrCB")) ) )
+lmgrCreateMenuItem("CGMshowMyLocks"     "simple"   '( ("label" "Show My Locks")         ("callback" ("CGMlmgrCB")) ) )
 
 lmgrCreateMenu("gitMenuPreferences" '(("label" "Preferences")) )
    lmgrCreateMenuItem("CGMprRepo"      "simple"  '( ("label" "git config-Repository")       ("callback" ("CGMlmgrCB")) ) )
@@ -128,7 +129,8 @@ lmgrAddMenuItems("gitMenu" "LCV"    list("CGMcheckout"     ) )
 lmgrAddMenuItems("gitMenu" "LCV"    list("CGMexport"       ) )
 ;;RB, add Lock menu items
 lmgrAddMenuItems("gitMenu" "LCV"    list("CGMlock"         ) )
-lmgrAddMenuItems("gitMenu" "LCV"    list("CGMshowLocks"         ) )
+lmgrAddMenuItems("gitMenu" "LCV"    list("CGMshowLocks"    ) )
+lmgrAddMenuItems("gitMenu" "LCV"    list("CGMshowMyLocks"  ) )
 
 lmgrAddMenuItems("gitMenu" ""       list("gitMenuPreferences"     ) )
    lmgrAddMenuItems("gitMenuPreferences" ""       list("CGMprRepo"       ) )

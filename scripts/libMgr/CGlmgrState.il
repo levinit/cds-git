@@ -12,7 +12,7 @@ let( (menuState)
    lmgrSensitizeMenuItems( '("CGMgui") menuState)
    lmgrSensitizeMenuItems( '("CGMstatus" "CGMdiff" "CGMcheckout" "CGMexport") menuState)
    lmgrSensitizeMenuItems( '("CGMadd" "CGMreset" "CGMcommit" "CGMdiscard") menuState)
-   lmgrSensitizeMenuItems( '("CGMlock" "CGMshowLocks") menuState)
+   lmgrSensitizeMenuItems( '("CGMlock" "CGMshowLocks" "CGMshowMyLocks") menuState)
    lmgrSensitizeMenuItems( '("gitMenuRemote" "gitMenuBranch" "gitMenuMerge") menuState)
    lmgrSensitizeMenuItems( '("CGMprRepo") menuState)
 
