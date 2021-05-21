@@ -10,7 +10,15 @@ defmethod( Pull (( gs GitShell ) @key (remote "origin") (args "") (resolve t))
    ;Get the current branch
    Branch(gs)
 
-   syscmd = strcat("cd " gs->root->str " && git pull --recurse-submodules " remote " " gs->branch " " args)
+   ;Check status. If clean then use a simple pull with rebase, else stash -> pull with rebase -> stash pop. 
+   status_cmd =  strcat("cd " gs->path " && git status --porcelain .")
+   response = Cmd(gs status_cmd)
+   print(response)
+   if(response=="" then
+      syscmd = strcat("( cd " gs->root->str " && git pull --recurse-submodules --rebase " remote " " gs->branch " " args " )")
+   else
+      syscmd = strcat("( cd " gs->root->str " && git stash && git pull --recurse-submodules --rebase " remote " " gs->branch " " args " && git stash pop )")
+   )
    result=Cmd(gs syscmd)
 
    if(!result then
