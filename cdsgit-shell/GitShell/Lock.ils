@@ -7,8 +7,8 @@ defmethod( LFSlock (( gs GitShell ) oppath)
          	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
       	else
           if( result != "" then
-      		  Info(gs result)
-            ;printf("CdsGit LFS Lock : %s\n" result)
+      		  ;Info(gs result)
+            printf("CdsGit LFS Lock : %s\n" result)
           else
             printf("CdsGit LFS Lock : nothing to lock in path %s\n" oppath)
           )
