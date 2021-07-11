@@ -42,7 +42,7 @@ lmgrCreateMenuItem("CGMsetupSSH"  "simple"  '( ("label" "Setup/Show SSH")     ("
 lmgrCreateMenu("gitMenuRemote" '(("label" "Remote")) )
    lmgrCreateMenuItem("CGMreSet"       "simple"  '( ("label" "Set")              ("callback" ("CGMlmgrCB")) ) )
    lmgrCreateMenuItem("CGMreFetch"     "simple"  '( ("label" "Fetch")            ("callback" ("CGMlmgrCB")) ) )
-   lmgrCreateMenuItem("CGMrePull"      "simple"  '( ("label" "Pull")             ("callback" ("CGMlmgrCB")) ) )
+   lmgrCreateMenuItem("CGMrePull"      "simple"  '( ("label" "Pull (Rebase)")             ("callback" ("CGMlmgrCB")) ) )
    lmgrCreateMenuItem("CGMrePush"      "simple"  '( ("label" "Push")             ("callback" ("CGMlmgrCB")) ) )
 
 
