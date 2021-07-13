@@ -41,7 +41,7 @@ procedure( CGstatusForm(gs)
       r_filter=hiCreateRadioField(
          ?name 'r_filter
          ?prompt "Depth"
-         ?value gs->depth
+         ?value "Cell" ;gs->depth
          ?choices '("Repository" "Library" "Cell" "View" "Files")
          ?callback list(radioCB)
       )
