@@ -53,6 +53,7 @@ loadi(strcat(cdsgit_gs_path "/GitShell/Init.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Push.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Pull.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Fetch.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/ContinueRebase.ils"))
 ;RB, add LFS Lock
 loadi(strcat(cdsgit_gs_path "/GitShell/Lock.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/Unlock.ils"))

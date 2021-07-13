@@ -1,6 +1,8 @@
 /* Testing
 CGmergeResolveForm(GitShell(?path "../cdsgit-testrepo"))
 TODO: Allow ours and theirs to interchange
+
+Modified for rebase flow where the meaning of ours/theirs is reversed!
 */
 
 ;Merge Gui
@@ -114,7 +116,7 @@ procedure( CGmergeResolveForm(gs)
 
       b_commit = hiCreateButton(
          ?name 'b_commit
-         ?buttonText "Commit"
+         ?buttonText "Continue Pull (Rebase)"
          ?callback "CGmergeResolveFormCommitCB()"
       )
 
@@ -177,8 +179,9 @@ procedure( CGmergeResolveFormAddCB(option)
       fchoices = cgmergeresolve_form->rf_conflict->choices
       fchoice = nthelem(fvalue+1 fchoices)
       oppath = nthelem(3 fchoice)
-
-      Checkout(gs strcat("--" option) ?oppath oppath)
+      ;; with rebase the meaning of ours and theirs is swapped so we need to swap it for the checkout
+      _option = option == "ours" && "theirs" || "ours"
+      Checkout(gs strcat("--" _option) ?oppath oppath)
       AddCG(gs oppath)
 
       case( option
@@ -199,9 +202,10 @@ procedure( CGmergeResolveFormCommitCB()
    fchoices = cgmergeresolve_form->rf_conflict->choices
 
    if( fchoices then
-      Info(gs "Please Resolve All Conflicts Before Commit!")
+      Info(gs "Please Resolve All Conflicts Before Continuing!")
    else
-      Commit(gs "" ?merge t)
+      ;Commit(gs "" ?merge t)
+      ContinueRebase(gs)
    )
    hiFormClose(cgmergeresolve_form)
    hiFormClose(cgbranchsel_form)

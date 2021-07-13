@@ -4,7 +4,11 @@
    remote = the remote url
    args - arugments to pass
    resolve - open the merge resolve form if fail
+
+   modified to do a temporary commit before the rebase
+   fixed check for conflicts
 */
+
 defmethod( Pull (( gs GitShell ) @key (remote "origin") (args "") (resolve t))
 
    ;Get the current branch
@@ -13,11 +17,12 @@ defmethod( Pull (( gs GitShell ) @key (remote "origin") (args "") (resolve t))
    ;Check status. If clean then use a simple pull with rebase, else stash -> pull with rebase -> stash pop. 
    status_cmd =  strcat("cd " gs->path " && git status --porcelain .")
    response = Cmd(gs status_cmd)
-   print(response)
+
    if(response=="" then
       syscmd = strcat("( cd " gs->root->str " && git pull --recurse-submodules --rebase " remote " " gs->branch " " args " )")
    else
-      syscmd = strcat("( cd " gs->root->str " && git stash && git pull --recurse-submodules --rebase " remote " " gs->branch " " args " && git stash pop )")
+      ;Info(gs "Making a temporary commit...")
+      syscmd = strcat("( cd " gs->root->str " && git add -A && git commit -m \"temp commit\" && git pull --recurse-submodules --rebase && git reset --mixed HEAD^ )")
    )
    result=Cmd(gs syscmd)
 
@@ -26,8 +31,8 @@ defmethod( Pull (( gs GitShell ) @key (remote "origin") (args "") (resolve t))
    else
       Info(gs result)
    )
-   if( resolve && rexMatchp("Automatic merge failed; fix conflicts and then commit the result" result) then
-      response = Dialog(gs "Merge failed due to conflicts\nOpen the Merge confilt resolve form?")
+   if( resolve && rexMatchp("CONFLICT" result) then
+      response = Dialog(gs "Merge failed due to conflicts\nOpen the Merge conflict resolve form? (YES YOU SHOULD!!!)")
       if(response then
          gs->path = gs->root->str
          CGmergeResolveForm(gs)
@@ -36,5 +41,4 @@ defmethod( Pull (( gs GitShell ) @key (remote "origin") (args "") (resolve t))
       )
    )
    Refresh(gs)
-
 )

@@ -1,0 +1,27 @@
+defmethod( ContinueRebase (( gs GitShell ) )
+
+      if( gs->path && gs->path != "" then
+         syscmd = strcat("cd " gs->root->str " && git rebase --continue")
+
+         result=Cmd(gs syscmd)
+
+         if(!result then
+            ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" gs->path syscmd))
+         else
+            if( rexMatchp("No changes - did you forget to use 'git add'?", result) then
+               response = Dialog(gs "Skip this patch?")
+               if( response then
+                  syscmd = strcat("cd " gs->root->str " && git rebase --skip")
+                  result=Cmd(gs syscmd)
+               else
+                  ErrorCG(gs "Rebase failed - check git status and resolve")
+               )
+            )
+   
+            Info(gs result)
+         )
+      )
+
+
+   t
+)

@@ -1,0 +1,36 @@
+procedure( setWinReadOnly(win)
+   let( (cv)
+      cv = win->displayCellView
+      geChangeEditMode("r" win)
+      printf("CdsGit : %L, %s:%s:%s made read-only\n" win cv~>libName cv~>cellName cv~>viewName)
+   )
+)
+
+procedure( CGsetWindowsReadOnly(gs oppath)
+   let( ( lcv cellName viewName level windows )
+      when( gs->libName
+         ;print(oppath)
+         lcv = member(gs->libName parseString(oppath "/"))
+         cellName = cadr(lcv)
+         viewName = caddr(lcv) 
+         level = cond( (viewName "view")
+                       (cellName "cell")
+                       (gs->libName "lib")
+                       (t nil)
+                 ) 
+         windows = hiGetWindowList()
+         foreach( win windows
+            when( cv = win->displayCellView
+               case( level
+                   ( "view" when(cv~>libName == gs->libName && cv~>cellName == cellName && cv~>viewName == viewName
+                               setWinReadOnly(win)) )
+                   ( "cell" when(cv~>libName == gs->libName && cv~>cellName == cellName
+                               setWinReadOnly(win)) )
+                   ( "lib"  setWinReadOnly(win) )
+               )
+            )
+         )
+      )
+      t
+   )
+)
