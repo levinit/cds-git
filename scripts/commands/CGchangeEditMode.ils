@@ -1,0 +1,45 @@
+procedure( setMode(win mode)
+   let( (cv mtext)
+      cv = win->displayCellView
+      if( mtext = case( mode
+             ( "r" "read-only" )
+             ( "a" "editable" )
+             ( t nil )
+          )
+      then
+         geChangeEditMode(mode win)
+         printf("CdsGit : %L, %s:%s:%s made %s\n" win cv~>libName cv~>cellName cv~>viewName mtext)
+      else
+         printf("CdsGit : Error! Can't change edit mode\n") 
+      )
+   )
+)
+
+procedure( CGchangeEditMode(gs oppath mode)
+   let( ( lcv cellName viewName level windows )
+      when( gs->libName
+         ;print(oppath)
+         lcv = member(gs->libName parseString(oppath "/"))
+         cellName = cadr(lcv)
+         viewName = caddr(lcv) 
+         level = cond( (viewName "view")
+                       (cellName "cell")
+                       (gs->libName "lib")
+                       (t nil)
+                 ) 
+         windows = hiGetWindowList()
+         foreach( win windows
+            when( cv = win->displayCellView
+               case( level
+                   ( "view" when(cv~>libName == gs->libName && cv~>cellName == cellName && cv~>viewName == viewName
+                               setMode(win mode)) )
+                   ( "cell" when(cv~>libName == gs->libName && cv~>cellName == cellName
+                               setMode(win mode)) )
+                   ( "lib"  setMode(win mode) )
+               )
+            )
+         )
+      )
+      t
+   )
+)

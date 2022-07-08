@@ -9,6 +9,7 @@ defmethod( LFSlock (( gs GitShell ) oppath)
           if( result != "" then
       		  ;Info(gs result)
             printf("CdsGit LFS Lock : %s\n" result)
+            CGchangeEditMode(gs oppath "a")
           else
             printf("CdsGit LFS Lock : nothing to lock in path %s\n" oppath)
           )

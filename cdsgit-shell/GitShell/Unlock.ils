@@ -1,6 +1,6 @@
 defmethod( LFSunlock (( gs GitShell ) oppath)
 	if( oppath && oppath != "" then
-      CGsetWindowsReadOnly(gs oppath)
+      CGchangeEditMode(gs oppath "r")
       syscmd = strcat(getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh " oppath)
       result=Cmd(gs syscmd)
 
