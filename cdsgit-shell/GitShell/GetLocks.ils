@@ -18,7 +18,7 @@ defmethod( GetLocks (( gs GitShell ))
 
 defmethod( GetLocalLocks (( gs GitShell ))
 
-    syscmd = strcat("cd " gs->root->str " && git lfs locks --local")
+    syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O\"")
     result=Cmd(gs syscmd)
 
         if(!result then
