@@ -14,7 +14,7 @@ procedure( CGpreDeleteTrigger(dd)
          gs->libName = dd~>lib~>name
          when( gs->valid
             printf("CdsGit CGpreDeleteTrigger: Unlocking deleted views\n")
-            LFSunlock(gs gs->path)
+            LFSunlock(gs gs->path ?force t)
          )
       )
    )

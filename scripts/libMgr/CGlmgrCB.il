@@ -82,8 +82,8 @@ procedure( CGMlmgrCB(_menuName lib _c _v _f _cat)
       ("CGMdiscard"       Discard(gs)        )
       ;RB, add lock
       ("CGMlock"          LFSlock(gs gs->path)  )
-      ("CGMshowLocks"     GetLocks(gs)       ) 
-      ("CGMshowMyLocks"   GetLocalLocks(gs)  )
+      ("CGMshowLocks"     GetLocks(gs gs->path)       ) 
+      ("CGMshowMyLocks"   GetLocalLocks(gs gs->path)  )
       ;Merge
       ("CGMmrMerge"       CGBSmergeForm(gs)  )
       ("CGMmrMergeAbort"  CGmergeAbortCB(gs) )

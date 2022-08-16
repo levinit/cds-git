@@ -1,7 +1,14 @@
-defmethod( LFSunlock (( gs GitShell ) oppath)
+defmethod( LFSunlock (( gs GitShell ) oppath @key (force nil) )
 	if( oppath && oppath != "" then
       CGchangeEditMode(gs oppath "r")
-      syscmd = strcat(getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh " oppath)
+      GetLocalLocks(gs oppath ?silent t)
+      rexCompile("\n")
+      files_to_unlock = rexReplace(gs->localLocks " " 0)
+      if( force then
+        syscmd = strcat("cd " oppath " && " getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh -f " files_to_unlock)
+      else
+        syscmd = strcat("cd " oppath " && " getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh " files_to_unlock)
+      )
       result=Cmd(gs syscmd)
 
       	if(!result then
@@ -9,7 +16,7 @@ defmethod( LFSunlock (( gs GitShell ) oppath)
       	else 
           if( result != "" then
             ;Info(gs result)
-            printf("CdsGit Unlock : %s\n" result)
+            printf("CdsGit LFS Unlock : %s\n" result)
           else
             ;Info(gs "Nothing to unlock")
             printf("CdsGit LFS Unlock : nothing to unlock in path %s\n" oppath)
