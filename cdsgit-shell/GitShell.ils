@@ -44,6 +44,10 @@ defclass( GitShell
       (branch   @initform nil); The current branch
       (branches @initform nil); Branches to choose from
 
+      ;Lock Info
+      (localLocks @initform nil);
+      (allLocks   @initform nil);
+
    )
 
 )

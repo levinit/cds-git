@@ -1,6 +1,12 @@
-defmethod( GetLocks (( gs GitShell ))
+defmethod( GetLocks (( gs GitShell ) oppath)
 
-    syscmd = strcat("cd " gs->root->str " && git lfs locks")
+    rexCompile(strcat(gs->root->str "/"))
+    repo_path = rexReplace(oppath "" 0)
+    if( strcmp(oppath gs->root->str) == 1 then
+        syscmd = strcat("cd " gs->root->str " && git lfs locks | grep " repo_path " | awk -v OFS='\t\t' '{print $1, $2}'")
+    else
+        syscmd = strcat("cd " gs->root->str " && git lfs locks | awk -v OFS='\t\t' '{print $1, $2}'")
+    )
     result=Cmd(gs syscmd)
 
     	if(!result then
@@ -9,27 +15,36 @@ defmethod( GetLocks (( gs GitShell ))
     		if( result != "" then
     			Info(gs result)
     		else
-    			Info(gs strcat("Nothing locked in " gs->root->str))
+    			Info(gs strcat("Nothing locked in " oppath))
     		)
     	)
-
 	t
 )
 
-defmethod( GetLocalLocks (( gs GitShell ))
+defmethod( GetLocalLocks (( gs GitShell ) oppath @key (silent nil))
 
-    syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O\"")
+    rexCompile(strcat(gs->root->str "/"))
+    repo_path = rexReplace(oppath "" 0)
+    if( strcmp(oppath gs->root->str) == 1 then
+        syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O.*\"" repo_path " | awk '{print $2}'")
+    else
+        syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O.*\" | awk '{print $2}'")
+    )
+    
     result=Cmd(gs syscmd)
 
         if(!result then
         ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
         else
-            if( result != "" then
-                Info(gs result)
-            else
-                Info(gs strcat("Nothing locked in " gs->root->str))
+            ;locks = parseString(result "\n")
+            if( !silent then
+                if( result!="" then
+                    Info(gs result)
+                else
+                    Info(gs strcat("Nothing locked in " oppath))
+                )
             )
+            gs->localLocks = result
         )
-
     t
 )
