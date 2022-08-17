@@ -45,6 +45,7 @@ defclass( GitShell
       (branches @initform nil); Branches to choose from
 
       ;Lock Info
+      (lockable   @initform nil); lockable file types (set in .gitattributes)
       (localLocks @initform nil);
       (allLocks   @initform nil);
 

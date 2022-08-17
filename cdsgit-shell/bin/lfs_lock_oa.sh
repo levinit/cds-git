@@ -1,6 +1,9 @@
 #!/bin/bash
 
 p=$(realpath $1)
+shift
+lockable="$@"
+
 #if path is a file then return the parent directory
 if [ -f "$1" ]
 then
@@ -10,8 +13,18 @@ else
 fi
 
 cd ${LCVdir}
-# get locakable files for this repo
-files=$(/bin/bash $CDSGIT_PATH/cdsgit-shell/bin/find_lockable.sh "$LCVdir")
+
+# build a find command using the lockable file types
+find_cmd=()
+for p in $lockable
+do
+	[ "$find_cmd" ] && find_cmd+=(-o)
+	find_cmd+=(-name "$p")
+done
+
+# find files to be locked under the given dir
+files=$(find $LCVdir -type f \( "${find_cmd[@]}" \))
+
 #echo "Files: ${files}"
 if git lfs --version | grep -q "^git-lfs/3\.[0-9]\.[0-9]"
 then

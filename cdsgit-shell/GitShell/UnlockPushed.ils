@@ -1,22 +1,32 @@
 defmethod( UnlockPushed (( gs GitShell ))
 	
-    syscmd = strcat("cd " gs->root->str " && git diff origin/master@{1} origin/master --name-status")
-    result=Cmd(gs syscmd)
-
-      	if(!result then
+    syscmd1 = strcat("cd " gs->root->str " && git fetch origin && git diff origin/master@{1} origin/master --name-status | awk '{print $2}'")
+    result1=Cmd(gs syscmd1)
+    
+      	if(!result1 then
          	ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
       	else
-      		; unlock those files that have been successfully pushed
-      		files = parseString(result, "\t\n")
-      		foreach( f files
-            	fullPath = strcat(gs->root->str "/" f)
-            	when( isFile(fullPath)
-			if( rexMatchp(".oa" fullPath) || rexMatchp(".sdb" fullPath) then 
-                		LFSunlock( gs fullPath )
-                		;printf("%s is an OA file\n" path)
-			)
-            	)
-        	)
-      	)
+          if( result1 != "" then
+            ; unlock those files that have been successfully pushed
+            rexCompile("\n")
+            files_to_unlock = rexReplace(result1 " " 0)
+      		  printf("CdsGit LFS : Unlock pushed files: %L\n" files_to_unlock)
+            
+            syscmd2 = strcat("cd " gs->root->str " && " getShellEnvVar("CDSGIT_PATH") "/cdsgit-shell/bin/lfs_unlock_oa.sh " files_to_unlock)
+            result2 = Cmd(gs syscmd2)
+
+            printf("CdsGit LFS Unlock : %s\n" result2)
+          else
+            printf("CdsGit LFS Unlock : nothing to unlock")
+            ;foreach( f files
+            ;	fullPath = strcat(gs->root->str "/" f)
+            ;	when( isFile(fullPath)
+             ;     printf("CdsGit LFS : Path to unlock : %s" fullPath)
+              ;    LFSunlock( gs fullPath )
+                  ;printf("%s is an OA file\n" path)
+            ;	)
+            ;)
+          )
+        )
 	t
 )

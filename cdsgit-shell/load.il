@@ -60,6 +60,7 @@ loadi(strcat(cdsgit_gs_path "/GitShell/Unlock.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/UnlockPushed.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/GetLocks.ils"))
 loadi(strcat(cdsgit_gs_path "/GitShell/InitLFS.ils"))
+loadi(strcat(cdsgit_gs_path "/GitShell/GetLockable.ils"))
 
 ;GitOperations
 loadi(strcat(cdsgit_gs_path "/GitShell/Reset.ils"))

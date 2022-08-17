@@ -1,0 +1,17 @@
+defmethod( GetLockable (( gs GitShell ) @key (silent nil) )
+
+    syscmd = strcat("cd " gs->root->str " && git lfs track | grep lockable | awk '{print $1}'")
+    
+    result=Cmd(gs syscmd)
+
+    if( result != "" then
+  		if( !silent then Info(gs result) )
+        gs->lockable = parseString(result "\n")
+   	else
+   		if( !silent then Info(gs "No lockable file types found") )
+        gs->lockable = nil
+    )    
+	t
+)
+
+
