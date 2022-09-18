@@ -16,10 +16,10 @@ defmethod( LFSunlock (( gs GitShell ) oppath @key (force nil) )
       	else 
           if( result != "" then
             ;Info(gs result)
-            printf("CdsGit LFS Unlock : %s\n" result)
+            printf("CdsGit Unlock : %s\n" result)
           else
             ;Info(gs "Nothing to unlock")
-            printf("CdsGit LFS Unlock : nothing to unlock in path %s\n" oppath)
+            printf("CdsGit Unlock : nothing to unlock in path %s\n" oppath)
           )
         )
     )

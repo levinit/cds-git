@@ -1,10 +1,11 @@
 defmethod( GetLocks (( gs GitShell ) oppath)
 
-    rexCompile(strcat(gs->root->str "/"))
-    repo_path = rexReplace(oppath "" 0)
     if( strcmp(oppath gs->root->str) == 1 then
-        syscmd = strcat("cd " gs->root->str " && git lfs locks | grep " repo_path " | awk -v OFS='\t\t' '{print $1, $2}'")
-    else
+    ; if 1 then given path and top level of the repo are not the same and we can assume we're at cell or view level
+        rexCompile(strcat(gs->root->str "/"))
+        lcv_path = strcat(rexReplace(oppath "" 0) "/")  ; get cell/view path, we'll grep the output of the locks cmd with this
+        syscmd = strcat("cd " gs->root->str " && git lfs locks | grep " lcv_path " | awk -v OFS='\t\t' '{print $1, $2}'")
+    else  ; get ALL locks
         syscmd = strcat("cd " gs->root->str " && git lfs locks | awk -v OFS='\t\t' '{print $1, $2}'")
     )
     result=Cmd(gs syscmd)
@@ -24,11 +25,12 @@ defmethod( GetLocks (( gs GitShell ) oppath)
 
 defmethod( GetLocalLocks (( gs GitShell ) oppath @key (silent nil))
 
-    rexCompile(strcat(gs->root->str "/"))
-    repo_path = rexReplace(oppath "" 0)
-    if( strcmp(oppath gs->root->str) == 1 then
-        syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O.*\"" repo_path " | awk '{print $2}'")
-    else
+    if( strcmp(oppath gs->root->str) == 1 then  
+    ; if 1 then given path and top level of the repo are not the same and we can assume we're at cell or view level
+        rexCompile(strcat(gs->root->str "/"))
+        lcv_path = strcat(rexReplace(oppath "" 0) "/")  ; get cell/view path, we'll grep the output of the locks cmd with this
+        syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O.*" lcv_path "\"" " | awk '{print $2}'")
+    else  ; get ALL local locks
         syscmd = strcat("cd " gs->root->str " && git lfs locks --verify | grep \"^O.*\" | awk '{print $2}'")
     )
     
@@ -37,7 +39,6 @@ defmethod( GetLocalLocks (( gs GitShell ) oppath @key (silent nil))
         if(!result then
         ErrorCG(gs sprintf(nil "Not a valid path %s\nCommand:%s" oppath syscmd))
         else
-            ;locks = parseString(result "\n")
             if( !silent then
                 if( result!="" then
                     Info(gs result)

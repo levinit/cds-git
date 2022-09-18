@@ -1,5 +1,8 @@
 defmethod( GetLockable (( gs GitShell ) @key (silent nil) )
 
+    unless(gs->root->str
+        Root(gs)
+    )
     syscmd = strcat("cd " gs->root->str " && git lfs track | grep lockable | awk '{print $1}'")
     
     result=Cmd(gs syscmd)

@@ -11,7 +11,7 @@ procedure( CGpostCreateCvTrigger(parentId objPath objType dd)
          gs->cellName = dd~>cell~>name
          gs~>viewName = dd~>name
          when( gs->valid
-            printf("CdsGit CGpostCreateCVtrigger(): Locking view for edit\n")
+            printf("CdsGit CGpostCreateCVtrigger: Locking view for edit\n")
             LFSlock(gs gs->path)
          )
       )
