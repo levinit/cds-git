@@ -1,4 +1,4 @@
-defmethod( LFSlock (( gs GitShell ) oppath)
+defmethod( LFSlock (( gs GitShell ) oppath @key (checkOut t))
 	if( oppath && oppath != "" then
       GetLockable(gs ?silent t)
 
@@ -11,6 +11,8 @@ defmethod( LFSlock (( gs GitShell ) oppath)
           if( result != "" then
       		  ;Info(gs result)
             printf("CdsGit Lock : %s\n" result)
+            when(checkOut  ; checkout the latest version when we lock the file
+              Cmd(gs strcat("cd " gs->path " && git checkout -- ." ) ))
             CGchangeEditMode(gs oppath "a")
           else
             printf("CdsGit Lock : nothing to lock in path %s\n" oppath)

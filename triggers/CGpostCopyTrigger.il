@@ -25,7 +25,7 @@ procedure(CGcopyTrigger(myFunction copyPhaseStr checkOffList supplementList othe
        foreach( path pathList
           gs = CGMlmgrCB_gs(car(path) cadr(path) caddr(path) ?skipRoot t)
           printf("CdsGit CGpostCopyTrigger: Locking %s %s %s\n" car(path) cadr(path) caddr(path))
-          LFSlock(gs gs->path)
+          LFSlock(gs gs->path ?checkOut nil)  ; Do not try to checkout the latest version of a copied file
        )
     )
   )

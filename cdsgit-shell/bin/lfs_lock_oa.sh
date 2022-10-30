@@ -30,28 +30,15 @@ if [ -z "$files" ]
 then
     echo "Nothing to lock in path $LCVdir"
 else
-    # If dir contains tracked files then checkout latest before we lock
-    if [ ! -z "$(git ls-files $LCVdir)" ]
-    then
-        echo "Checking out latest version from remote"
-        git fetch && git checkout origin/master -- $LCVdir
-    fi
     if git lfs --version | grep -q "^git-lfs/3\.[0-9]\.[0-9]"
     then
 	# With git-lfs v3.0.0 and higher we can lock multiple files as a batch
-	git lfs lock $files
+		git lfs lock $files
     else
-	for f in $files
-	do
-	  #  if [ -z "$(git lfs locks --path=${f})" ]
-	  #  then
-		#checkout latest before we lock the file
-            git lfs lock $f
-#		echo "Locking file ${f}"
-#	    else
-#		echo "${f} already locked"
-#	    fi
-	done
+		for f in $files
+		do
+			git lfs lock $f
+		done
     fi
 fi
 
